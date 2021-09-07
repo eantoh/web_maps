@@ -56,16 +56,17 @@
             }
         }
         var map = L.map('map',{
-            zoomControl:true, maxZoom:5, minZoom:2
+            zoomControl:true, maxZoom:6, minZoom:4
         }).fitBounds([[-4.760576741608245,-30.550483773398668],[28.075709407109336,29.212295741365175]]);
         var hash = new L.Hash(map);
-        map.setView({lat:11.609, lng:0.681}, 4);
+        map.setView({lat:11.609, lng:0.681}, 5);
         //map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
         }
 
+        //L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
         L.tileLayer('https://api.mapbox.com/styles/v1/eantoh/ckta1rmh00qr917o1vfnjze99/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZWFudG9oIiwiYSI6ImNrczgzaGt3eTFqMXIybnBobG9ncG1oZWUifQ.9_fgcUJdt8ySk0naLxGrgQ', {
             attribution: '',
             maxZoom: 18,
@@ -181,7 +182,7 @@
                 lineJoin: 'miter',
                 weight: 1.0, 
                 fill: true,
-                fillOpacity: 0.75,
+                fillOpacity: 0.50,
                 fillColor: 'rgba(0,77,168,1.0)',
                 interactive: true,
             }
@@ -196,7 +197,7 @@
                 lineJoin: 'miter',
                 weight: 1.0, 
                 fill: true,
-                fillOpacity: 0.75,
+                fillOpacity: 0.50,
                 fillColor: 'rgba(0,132,168,1.0)',
                 interactive: true,
             }
@@ -204,14 +205,14 @@
                 case 'Presence Country':
                     return {
                 pane: 'pane_OperatingUnitType_1',
-                opacity: 0.75,
+                opacity: 0.50,
                 color: 'rgba(255,255,255,1.0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
                 weight: 1.0, 
                 fill: true,
-                fillOpacity: 0.75,
+                fillOpacity: 0.50,
                 fillColor: 'rgba(0,38,115,1.0)',
                 interactive: true,
             }
