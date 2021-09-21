@@ -1,73 +1,83 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <link rel="stylesheet" href="css/leaflet.css">
-        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
-        <style>
-         html, body{
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="css/leaflet.css">
+    <link rel="stylesheet" href="css/qgis2web.css">
+    <link rel="stylesheet" href="css/fontawesome-all.min.css">
+    <style>
+        html,
+        body {
             margin: 0;
-                padding: 0;
+            padding: 0;
         }
+
         #map {
             width: 100wh;
             height: 100vh;
         }
-        </style>
-        <title></title>
-    </head>
-    <body>
-        <div id="map">
-        </div>
-        <script src="js/qgis2web_expressions.js"></script>
-        <script src="js/leaflet.js"></script>
-        <script src="js/leaflet.rotatedMarker.js"></script>
-        <script src="js/leaflet.pattern.js"></script>
-        <script src="js/leaflet-hash.js"></script>
-        <script src="js/Autolinker.min.js"></script>
-        <script src="js/rbush.min.js"></script>
-        <script src="js/labelgun.min.js"></script>
-        <script src="js/labels.js"></script>
-       <!--  <script src="data/World_Countries__Generalized__0.js"></script> -->
-        <script src="data/OperatingUnitType_1.js"></script>
-        <script src="data/Mission_Location_2.js"></script>
-        <script>
+    </style>
+    <title></title>
+</head>
+
+<body>
+    <div id="map">
+    </div>
+    <script src="js/qgis2web_expressions.js"></script>
+    <script src="js/leaflet.js"></script>
+    <script src="js/leaflet.rotatedMarker.js"></script>
+    <script src="js/leaflet.pattern.js"></script>
+    <script src="js/leaflet-hash.js"></script>
+    <script src="js/Autolinker.min.js"></script>
+    <script src="js/rbush.min.js"></script>
+    <script src="js/labelgun.min.js"></script>
+    <script src="js/labels.js"></script>
+    <!--  <script src="data/World_Countries__Generalized__0.js"></script> -->
+    <script src="data/OperatingUnitType_1.js"></script>
+    <script src="data/Mission_Location_2.js"></script>
+    <script>
         var highlightLayer;
         function highlightFeature(e) {
             highlightLayer = e.target;
 
             if (e.target.feature.geometry.type === 'LineString') {
-              highlightLayer.setStyle({
-                color: '#336BFF',
-                fillColor: '#336BFF',
-                fillOpacity: 0.5
-              });
+                highlightLayer.setStyle({
+                    color: '#336BFF',
+                    fillColor: '#336BFF',
+                    fillOpacity: 0.5
+                });
             } else {
-              highlightLayer.setStyle({
-                color: '#336BFF',
-                fillColor: '#336BFF',
-                fillOpacity: 0.2
-                
-              });
+                highlightLayer.setStyle({
+                    color: '#336BFF',
+                    fillColor: '#336BFF',
+                    fillOpacity: 0.2
+
+                });
             }
         }
-        var map = L.map('map',{
-            zoomControl:true, maxZoom:6, minZoom:4
-        }).fitBounds([[-4.760576741608245,-30.550483773398668],[28.075709407109336,29.212295741365175]]);
+        var map = L.map('map', {
+            zoomControl: true, maxZoom: 6, minZoom: 4
+        }).fitBounds([[-4.760576741608245, -30.550483773398668], [28.075709407109336, 29.212295741365175]]);
         var hash = new L.Hash(map);
-        map.setView({lat:11.609, lng:0.681}, 5);
+        map.setView({ lat: 11.609, lng: 0.681 }, 5);
         //map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
-        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var autolinker = new Autolinker({ truncate: { length: 30, location: 'smart' } });
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
         }
 
+
+        map.createPane('labels');
+        map.getPane('labels').style.zIndex = 650;
+
+
         //L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-        L.tileLayer('https://api.mapbox.com/styles/v1/eantoh/ckta1rmh00qr917o1vfnjze99/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZWFudG9oIiwiYSI6ImNrczgzaGt3eTFqMXIybnBobG9ncG1oZWUifQ.9_fgcUJdt8ySk0naLxGrgQ', {
+        var positron = L.tileLayer('https://api.mapbox.com/styles/v1/eantoh/ckta1rmh00qr917o1vfnjze99/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZWFudG9oIiwiYSI6ImNrczgzaGt3eTFqMXIybnBobG9ncG1oZWUifQ.9_fgcUJdt8ySk0naLxGrgQ', {
             attribution: '',
             maxZoom: 18,
             id: '',
@@ -76,8 +86,39 @@
             accessToken: ''
         }).addTo(map);
 
+        var positronLabels = L.tileLayer('https://api.mapbox.com/styles/v1/eantoh/cktu43ozo0y4k18pjsq97c4cx/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZWFudG9oIiwiYSI6ImNrczgzaGt3eTFqMXIybnBobG9ncG1oZWUifQ.9_fgcUJdt8ySk0naLxGrgQ', {
+            attribution: '',
+            pane: 'labels'
+        }).addTo(map);
 
-
+       // var mylabels = {
+             //"type": "FeatureCollection", "features": [
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [2.340074198522316, 9.659309783394448] }, "properties": { "latitude": 9.30769, "longitude": 2.315834, "Country": "Benin" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [-1.7460403188727978, 12.27428918123443] }, "properties": { "latitude": 12.238333, "longitude": -1.561593, "Country": "Burkina Faso" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [-23.975196338124498, 15.943841875143743] }, "properties": { "latitude": 16.002082, "longitude": -24.013197, "Country": "Cape Verde" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [12.743521458296518, 5.696619950873316] }, "properties": { "latitude": 7.369722, "longitude": 12.354722, "Country": "Cameroon" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [18.661538523130066, 15.340152374275155] }, "properties": { "latitude": 15.454166, "longitude": 18.732207, "Country": "Chad" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [-5.554746920245343, 7.623204387069621] }, "properties": { "latitude": 7.539989, "longitude": -5.54708, "Country": "Côte d’Ivoire" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [10.335215013929112, 1.7033489974406704] }, "properties": { "latitude": 1.650801, "longitude": 10.267895, "Country": "Equatorial Guinea" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [11.78427761603877, -0.6228128007055062] }, "properties": { "latitude": -0.803689, "longitude": 11.609444, "Country": "Gabon" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [-15.386752387984496, 13.446418098839963] }, "properties": { "latitude": 13.443182, "longitude": -15.310139, "Country": "The Gambia" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [-1.2084929536374025, 7.963742995486499] }, "properties": { "latitude": 7.946527, "longitude": -1.023194, "Country": "Ghana" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [-10.936028594007007, 10.436959737099142] }, "properties": { "latitude": 9.945587, "longitude": -9.696645, "Country": "Guinea" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [-14.986754158012648, 12.012962938615564] }, "properties": { "latitude": 11.803749, "longitude": -15.180413, "Country": "Guinea Bissau" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [-9.312780731748292, 6.4494533406687955] }, "properties": { "latitude": 6.428055, "longitude": -9.429499, "Country": "Liberia" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [-3.526025249959901, 17.355616743799395] }, "properties": { "latitude": 17.570692, "longitude": -3.996166, "Country": "Mali" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [-10.336986025474319, 20.267169718691104] }, "properties": { "latitude": 21.00789, "longitude": -10.940835, "Country": "Mauritania" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [9.40118291056477, 17.424703552547125] }, "properties": { "latitude": 17.607789, "longitude": 8.081666, "Country": "Niger" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [8.09417078470566, 9.58664816750703] }, "properties": { "latitude": 9.081999, "longitude": 8.675277, "Country": "Nigeria" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [6.716493558742546, 0.43644738123815624] }, "properties": { "latitude": 0.18636, "longitude": 6.613081, "Country": "Sao Tomé & Príncipe" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [-14.476748397034504, 14.35963303645445] }, "properties": { "latitude": 14.497401, "longitude": -14.452362, "Country": "Senegal" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [-11.790009150840566, 8.5600613325151] }, "properties": { "latitude": 8.460555, "longitude": -11.779889, "Country": "Sierra Leone" } },
+                 //{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [0.977539153136774, 8.530650928426386] }, "properties": { "latitude": 8.619543, "longitude": 0.824782, "Country": "Togo" } }
+            // ]
+         //}
+         //L.geoJson(mylabels).bindPopup(function (layer) {
+             //return layer.feature.properties.Country
+         //}).addTo(map)
 
 
         // function pop_World_Countries__Generalized__0(feature, layer) {
@@ -146,7 +187,7 @@
         // map.addLayer(layer_World_Countries__Generalized__0);
         function pop_OperatingUnitType_1(feature, layer) {
             layer.on({
-                mouseout: function(e) {
+                mouseout: function (e) {
                     for (i in e.target._eventParents) {
                         e.target._eventParents[i].resetStyle(e.target);
                     }
@@ -167,55 +208,55 @@
                         <td colspan="2">' + (feature.properties['Mission_We'] !== null ? autolinker.link(feature.properties['Mission_We'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
+            layer.bindPopup(popupContent, { maxHeight: 400 });
         }
 
         function style_OperatingUnitType_1_0(feature) {
-            switch(String(feature.properties['Operating'])) {
+            switch (String(feature.properties['Operating'])) {
                 case 'Limited Presence Country':
                     return {
-                pane: 'pane_OperatingUnitType_1',
-                opacity: 0.80,
-                color: 'rgba(255,255,255,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 0.50,
-                fillColor: 'rgba(0,77,168,1.0)',
-                interactive: true,
-            }
+                        pane: 'pane_OperatingUnitType_1',
+                        opacity: 1,
+                        color: 'rgba(255,255,255,1.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 1,
+                        fillColor: 'rgba(0,77,168,1.0)',
+                        interactive: true,
+                    }
                     break;
                 case 'Non-presence Country':
                     return {
-                pane: 'pane_OperatingUnitType_1',
-                opacity: 0.75,
-                color: 'rgba(255,255,255,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 0.50,
-                fillColor: 'rgba(0,132,168,1.0)',
-                interactive: true,
-            }
+                        pane: 'pane_OperatingUnitType_1',
+                        opacity: 1,
+                        color: 'rgba(255,255,255,1.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 1,
+                        fillColor: 'rgba(0,132,168,1.0)',
+                        interactive: true,
+                    }
                     break;
                 case 'Presence Country':
                     return {
-                pane: 'pane_OperatingUnitType_1',
-                opacity: 0.50,
-                color: 'rgba(255,255,255,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 0.50,
-                fillColor: 'rgba(0,38,115,1.0)',
-                interactive: true,
-            }
+                        pane: 'pane_OperatingUnitType_1',
+                        opacity: 1,
+                        color: 'rgba(255,255,255,1.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 1,
+                        fillColor: 'rgba(0,38,115,1.0)',
+                        interactive: true,
+                    }
                     break;
             }
         }
@@ -235,7 +276,7 @@
         map.addLayer(layer_OperatingUnitType_1);
         function pop_Mission_Location_2(feature, layer) {
             layer.on({
-                mouseout: function(e) {
+                mouseout: function (e) {
                     for (i in e.target._eventParents) {
                         e.target._eventParents[i].resetStyle(e.target);
                     }
@@ -247,18 +288,18 @@
                         <td colspan="2">' + (feature.properties['Capital'] !== null ? autolinker.link(feature.properties['Capital'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
+            layer.bindPopup(popupContent, { maxHeight: 400 });
         }
 
         function style_Mission_Location_2_0() {
             return {
                 pane: 'pane_Mission_Location_2',
-        rotationAngle: 0.0,
-        rotationOrigin: 'center center',
-        icon: L.icon({
-            iconUrl: 'markers/Mission_Location_2.png',
-            iconSize: [12.92, 12.92]
-        }),
+                rotationAngle: 0.0,
+                rotationOrigin: 'center center',
+                icon: L.icon({
+                    iconUrl: 'markers/Mission_Location_2.png',
+                    iconSize: [12.92, 12.92]
+                }),
                 interactive: true,
             }
         }
@@ -283,7 +324,7 @@
         bounds_group.addLayer(layer_Mission_Location_2);
         map.addLayer(layer_Mission_Location_2);
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/Mission_Location_2.png" /> Mission Location': layer_Mission_Location_2,'<br> <b>Operating Unit Type </b><br /><table><tr><td style="text-align: center;"><img src="legend/OperatingUnitType_1_LimitedPresenceCountry0.png" /></td><td>Limited Presence Country</td></tr><tr><td style="text-align: center;"><img src="legend/OperatingUnitType_1_NonpresenceCountry1.png" /></td><td>Non-presence Country</td></tr><tr><td style="text-align: center;"><img src="legend/OperatingUnitType_1_PresenceCountry2.png" /></td><td>Presence Country</td></tr></table>': layer_OperatingUnitType_1,},{collapsed:false, position:'bottomleft'}).addTo(map);
+        L.control.layers(baseMaps, { '<img src="legend/Mission_Location_2.png" /> Mission Location': layer_Mission_Location_2, '<br> <b>Operating Unit Type </b><br /><table><tr><td style="text-align: center;"><img src="legend/OperatingUnitType_1_LimitedPresenceCountry0.png" /></td><td>Limited Presence Country</td></tr><tr><td style="text-align: center;"><img src="legend/OperatingUnitType_1_NonpresenceCountry1.png" /></td><td>Non-presence Country</td></tr><tr><td style="text-align: center;"><img src="legend/OperatingUnitType_1_PresenceCountry2.png" /></td><td>Presence Country</td></tr></table>': layer_OperatingUnitType_1, }, { collapsed: false, position: 'bottomleft' }).addTo(map);
         setBounds();
         var i = 0;
         // layer_World_Countries__Generalized__0.eachLayer(function(layer) {
@@ -311,15 +352,16 @@
 
         var checks = document.querySelectorAll('[type = "checkbox"]');
         function disCheck() {
-        for (i = 0; i < checks.length; ++i) {
-            checks[i].disabled = true;
-            checks[i].style.display = 'none';
+            for (i = 0; i < checks.length; ++i) {
+                checks[i].disabled = true;
+                checks[i].style.display = 'none';
             }
         }
         disCheck();
 
 
 
-        </script>
-    </body>
+    </script>
+</body>
+
 </html>
