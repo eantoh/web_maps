@@ -20,6 +20,7 @@
         #map {
             width: 100wh;
             height: 100vh;
+            x;
         }
     </style>
     <title></title>
@@ -61,11 +62,11 @@
             }
         }
         var map = L.map('map', {
-            zoomControl: true, maxZoom: 6, minZoom: 4
+            zoomControl: true, maxZoom: 5, minZoom: 2
         }).fitBounds([[-4.760576741608245, -30.550483773398668], [28.075709407109336, 29.212295741365175]]);
         var hash = new L.Hash(map);
-        map.setView({ lat: 11.609, lng: 0.681 }, 5);
-        //map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        map.setView({ lat: 9.19, lng: -16.17 }, 3);
+        map.attributionControl.setPrefix('<a href="https://eantoh.github.io/web_maps/#5/11.631/0.659" target="_blank">Click to expand map</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
         var autolinker = new Autolinker({ truncate: { length: 30, location: 'smart' } });
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
